@@ -3,13 +3,15 @@ from selenium.webdriver.common.by import By
 
 
 class LoginPage(SauceDemo):
+    URL = "https://www.saucedemo.com/"
+
     # locators
     USERNAME_INPUT = (By.ID, "user-name")
     PASSWORD_INPUT = (By.ID, "password")
     LOGIN_BUTTON = (By.ID, "login-button")
     ERROR_MSG = (By.CSS_SELECTOR, r'[data-test="error"]')
 
-    def open(self, clean=False):
+    def open(self, clean=True):
         if clean:
             self.driver.delete_all_cookies()
 
@@ -33,9 +35,11 @@ class LoginPage(SauceDemo):
         self.press_login()
 
     def get_error(self):
-        elm = self.driver.find_element(*self.ERROR_MSG)
-        return elm.text
+        elm = self.find_element(self.ERROR_MSG, timeout=0)
+        return elm.text if elm else ""
 
     def is_visible(self):
         return ("login" in self.get_visible_containers() and
-                self.driver.find_elemnts(*self.USERNAME_INPUT))
+                self.has_element(self.USERNAME_INPUT) and
+                self.has_element(self.PASSWORD_INPUT) and
+                self.has_element(self.LOGIN_BUTTON))
