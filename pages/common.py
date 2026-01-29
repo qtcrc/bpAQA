@@ -18,6 +18,15 @@ class SauceDemo:
         self.driver = driver
 
     @classmethod
+    def wait_until(self, method, timeout=DEFAULT_TIMEOUT):
+        try:
+            WebDriverWait(self.driver, timeout).until(method, timeout)
+        except TimeoutException:
+            return False
+
+        return True
+
+    @classmethod
     def find_element(self, selector_tuple, timeout=DEFAULT_TIMEOUT):
         if timeout > 0:
             try:

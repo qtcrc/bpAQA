@@ -1,3 +1,4 @@
+import time
 from pages.common import SauceDemo
 from selenium.webdriver.common.by import By
 
@@ -29,10 +30,24 @@ class LoginPage(SauceDemo):
         elm = self.driver.find_element(*self.LOGIN_BUTTON)
         elm.click()
 
-    def login(self, username, password):
+    def login(self, username, password, timeout=1):
+        login_start_time = time.time()
         self.enter_username(username)
         self.enter_password(password)
         self.press_login()
+        login_end_time = time.time()
+
+        # (REDO) login button press hangs whole tab... This will not work.
+        #
+        # self.wait_until(
+        #     lambda d:
+        #         (self.get_error() != "" or
+        #          "inventory" in self.get_visible_containers()),
+        #     timeout
+        # )
+
+        # (TEMP)
+        assert (login_end_time - login_start_time) <= timeout
 
     def get_error(self):
         elm = self.find_element(self.ERROR_MSG, timeout=0)

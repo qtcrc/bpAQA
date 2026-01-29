@@ -1,24 +1,35 @@
 import pytest
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 
 
 @pytest.fixture(scope="module")
-def browser_module():
-    driver = webdriver.Chrome()
+def google_chrome_module():
+    opt = Options()
+
+    opt.add_argument("--disable-save-password-bubble")
+    opt.add_argument("--disable-infobars")
+    opt.add_argument("--disable-notifications")
+    opt.add_argument("--disable-popup-blocking")
+    opt.add_argument("--incognito")
+
+    driver = webdriver.Chrome(options=opt)
     yield driver
+
     driver.quit()
 
 
-# critical test
+# critical tests
+
+_failed_critical_modules = set()
+
+
 def pytest_configure(config):
     config.addinivalue_line(
         "markers",
         "critical: marks a test as critical; \
         failure stops remaining tests in the module"
     )
-
-
-_failed_critical_modules = set()
 
 
 def pytest_runtest_setup(item):
