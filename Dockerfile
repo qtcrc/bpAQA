@@ -7,7 +7,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
     PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1
 
-# Install dependencies for Chrome, Node.js, and Allure
+# Install dependencies for Chrome
 RUN apt-get update && apt-get install -y --no-install-recommends \
     wget \
     curl \
@@ -31,15 +31,6 @@ RUN wget -q -O google-chrome.deb https://dl.google.com/linux/direct/google-chrom
     && apt-get update && apt-get install -y ./google-chrome.deb \
     && rm google-chrome.deb
 
-# Install Node.js (LTS version) and npm
-RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - \
-    && apt-get install -y nodejs \
-    && node -v \
-    && npm -v
-
-# Install Allure Commandline
-RUN npm install -g allure-commandline --save-dev
-
 # Set work directory
 WORKDIR /app
 
@@ -48,9 +39,6 @@ COPY requirements.txt .
 RUN pip install --upgrade pip \
     && pip install -r requirements.txt
 
-# Copy the rest of your project
 COPY . .
 
-# Default command
-# CMD ["pytest"]
-
+CMD ["pytest", "--alluredir=allure-results"]
