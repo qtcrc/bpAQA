@@ -1,3 +1,14 @@
+install.sh && run.sh
+
+Или запуск через докер
+Dockerfile (pytest only)
+sudo docker build -t aqa-test . && sudo docker run aqa-test
+
+Docker compose (pytest + allure):
+sudo docker compose up --build
+
+
+
 Техническое задание: AQA Python
 
 Задача:

@@ -40,5 +40,4 @@ RUN pip install --upgrade pip \
     && pip install -r requirements.txt
 
 COPY . .
-
-CMD ["pytest", "--alluredir=allure-results"]
+CMD ["sh", "./run.sh"]
