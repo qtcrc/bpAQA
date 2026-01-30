@@ -1,6 +1,5 @@
 import time
 import allure
-import tests.allure_helper as AH
 from pages.common import SauceDemo
 from selenium.webdriver.common.by import By
 
