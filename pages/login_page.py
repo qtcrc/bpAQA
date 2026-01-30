@@ -1,4 +1,6 @@
 import time
+import allure
+import tests.allure_helper as AH
 from pages.common import SauceDemo
 from selenium.webdriver.common.by import By
 
@@ -18,20 +20,24 @@ class LoginPage(SauceDemo):
 
         self.driver.get(self.URL)
 
+    @allure.step("Введено имя пользователя")
     def enter_username(self, username):
         elm = self.driver.find_element(*self.USERNAME_INPUT)
         elm.send_keys(username)
 
+    @allure.step("Введён пароль пользователя")
     def enter_password(self, password):
         elm = self.driver.find_element(*self.PASSWORD_INPUT)
         elm.send_keys(password)
 
+    @allure.step("Нажата кнопка Login")
     def press_login(self):
         elm = self.driver.find_element(*self.LOGIN_BUTTON)
         elm.click()
 
     def login(self, username, password, timeout=1):
         login_start_time = time.time()
+
         self.enter_username(username)
         self.enter_password(password)
         self.press_login()
@@ -47,7 +53,8 @@ class LoginPage(SauceDemo):
         # )
 
         # (TEMP)
-        assert (login_end_time - login_start_time) <= timeout
+        assert (login_end_time - login_start_time <= timeout), \
+            "Login timeout"
 
     def get_error(self):
         elm = self.find_element(self.ERROR_MSG, timeout=0)

@@ -1,16 +1,24 @@
 import pytest
+import allure
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from pathlib import Path
 
 
+def is_docker():
+    return Path("/.dockerenv").exists()
+
+
+@allure.title("GoogleChrome (для модуля)")
 @pytest.fixture(scope="module")
 def google_chrome_module():
     opt = Options()
 
-    opt.add_argument("--headless")
-    opt.add_argument("--no-sandbox")
-    opt.add_argument("--disable-gpu")
-    opt.add_argument("--disable-dev-shm-usage")
+    if is_docker():
+        opt.add_argument("--headless")
+        opt.add_argument("--no-sandbox")
+        opt.add_argument("--disable-gpu")
+        opt.add_argument("--disable-dev-shm-usage")
 
     opt.add_argument("--disable-save-password-bubble")
     opt.add_argument("--disable-infobars")
