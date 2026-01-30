@@ -1,35 +1,47 @@
-install.sh && run.sh
+### Pytest selenium
+#### Локальная установка:
 
-Или запуск через докер
-Dockerfile (pytest only)
-sudo docker build -t aqa-test . && sudo docker run aqa-test
+>Требования:
+    ( **python 3.10+**, **pip** )
 
-Docker compose (pytest + allure):
-sudo docker compose up --build
+linux:
+```
+    python -m venv .venv
+    source .venv/bin/activate
+    pip install -r requirements.txt
+```
+
+Windows(PowerShell): (not tested)
+```
+    python -m venv .venv
+    PS C:\> .venv\Scripts\Activate.ps1
+    pip install -r requirements.txt
+```
+
+Запуск:
+```
+pytest --alluredir=allure-results
+```
 
 
+#### Установка и запуск через Docker (headless):
+```
+docker compose up --build
+```
 
-Техническое задание: AQA Python
+***
+### (Опционально) Allure
+#### Локальная установка:
 
-Задача:
-    Автоматизировать тестирование логина на сайте https://www.saucedemo.com/ с
-    использованием Python.
-    Написать 5 тестов, проверяющих разные сценарии авторизации:
-    1. Успешный логин (standard_user / secret_sauce)
-    2. Логин с неверным паролем
-    3. Логин заблокированного пользователя (locked_out_user)
-    4. Логин с пустыми полями
-    5. Логин пользователем performance_glitch_user (проверить корректный переход и что страница открывается несмотря на возможные задержки)
+>Требования:
+    ( **node**, **java** )
+    
+Установка:
+```
+npm install
+```
 
-Требования:
-● Использовать Selenium или Playwright
-● Использовать Page Object
-● Подключить Allure
-● Проверять корректность URL и отображение элементов
-● Добавить Dockerfile для запуска тестов в контейнере
-● Python 3.10
-● Все зависимости — в requirements.txt
-● Короткая инструкция по запуску — в README.md
-
-Ожидаемый результат: Репозиторий с проектом, включающий все необходимые
-инструкции для установки и запуска.
+Запуск:
+```
+npx allure serve allure-results
+```
