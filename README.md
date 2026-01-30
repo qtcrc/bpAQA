@@ -1,8 +1,12 @@
-### Pytest selenium
-#### Локальная установка:
+### Pytest seleniums
+#### Установка и запуск через Docker (headless):
+```
+docker compose up --build
+```
 
+#### Локальная установка:
 >Требования:
-    ( **python 3.10+**, **pip** )
+    ( **python 3.10+**, **pip**, **GoogleChrome** )
 
 linux:
 ```
@@ -10,7 +14,6 @@ linux:
     source .venv/bin/activate
     pip install -r requirements.txt
 ```
-
 Windows(PowerShell): (not tested)
 ```
     python -m venv .venv
@@ -21,12 +24,6 @@ Windows(PowerShell): (not tested)
 Запуск:
 ```
 pytest --alluredir=allure-results
-```
-
-
-#### Установка и запуск через Docker (headless):
-```
-docker compose up --build
 ```
 
 ***
