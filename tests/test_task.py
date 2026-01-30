@@ -1,6 +1,7 @@
 from pages.login_page import LoginPage
 import pytest
 import allure
+import tests.allure_helpers as AH
 
 
 USERS = {
@@ -20,6 +21,10 @@ def test_login_page_is_shown_correctly(google_chrome_module):
     login_page = LoginPage(google_chrome_module)
 
     login_page.open(clean=True)
+    AH.take_screenshot(
+        google_chrome_module,
+        name="LoginPage"
+    )
 
     assert login_page.find_element(LoginPage.USERNAME_INPUT), \
         "Не найдено поле для ввода имени"
